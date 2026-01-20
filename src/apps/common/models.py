@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import datetime
 
-from app.common.constants import UTC_TZ
 from sqlalchemy import DateTime
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
+
+from src.apps.common.constants import UTC_TZ
 
 
 class BaseModel(DeclarativeBase):

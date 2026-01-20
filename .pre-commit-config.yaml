@@ -7,10 +7,9 @@ exclude: (/alembic/)|(sandbox\.py)
 
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.13
+    rev: v0.11.7
     hooks:
-      - id: ruff-check
-        types_or: [python, pyi]
+      - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
         stages:
           - pre-commit
@@ -31,6 +30,11 @@ repos:
         stages:
           - pre-commit
       - id: name-tests-test
+        exclude: >
+          (?x)^(
+            .*/factories_dto\.py|
+            .*/factories_model\.py
+          )$
         args: [--pytest-test-first]
         stages:
           - pre-commit

@@ -1,5 +1,5 @@
 run-server:
-	uvicorn --reload src.main:application
+	uvicorn --reload src.apps.main:application
 
 lock: # создание requirements.txt из requirements.in
 	pip-compile --generate-hashes --no-annotate --no-header --no-emit-index-url
