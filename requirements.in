@@ -1,6 +1,7 @@
 alembic
 asyncpg
 greenlet
+itsdangerous
 httpx
 fastapi
 mypy

@@ -26,8 +26,8 @@ class Settings(BaseSettings):
     DB_NAME: str = "feature_switch_db"
     DB_HOST: str = ""
     DB_PORT: int = 5432
-    TEST_DB_USER: str = ""
-    TEST_DB_PASSWORD: str = ""
+    TEST_DB_USER: str = "admin"
+    TEST_DB_PASSWORD: str = "admin"
 
 
 @functools.lru_cache

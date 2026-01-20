@@ -7,6 +7,7 @@ from typing import AsyncGenerator
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from src.apps.admin.common import initialise_admin_panel
 from src.apps.router import api_router
 from src.server.db import get_async_engine
 from src.server.prometheus import add_prometheus_metrics
@@ -34,6 +35,8 @@ def get_application() -> FastAPI:
         allow_headers=["*"],
     )
     add_prometheus_metrics(app=app)
+
+    initialise_admin_panel(app=app)
     return app
 
 
