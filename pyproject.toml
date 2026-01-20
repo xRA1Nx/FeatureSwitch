@@ -1,0 +1,179 @@
+[tool.coverage.run]
+omit = [
+    "*/conftest.py",
+    "*/queries.py",
+    "*/queries/*",
+    "*/models.py",
+    "*/models/*",
+    "*/migrations/*",
+    "*/tests/*",
+    "*/alembic/*"
+]
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+]
+
+[tool.pytest.ini_options]
+timeout = 30
+timeout_method = "thread"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+env = [
+    "IS_TESTING_MODE = true",
+    "API_BASE_URL=http://localhost:8000/"
+]
+markers = [
+    "long_running: marks tests as slow",
+]
+
+
+[tool.mypy]
+cache_dir = ".mypy_cache"
+python_version = "3.12"
+show_error_codes = true
+ignore_missing_imports = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+allow_redefinition = true
+follow_imports = "silent"
+no_implicit_optional = true
+warn_no_return = false
+warn_unused_ignores = true
+warn_redundant_casts = true
+exclude = ".env|venv|alembic|alembic/versions|tests|test|fixtures|conftest.py|settings|sandbox*.py|managment_commands.py"
+plugins = ["pydantic.mypy", ]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
+
+[tool.mypy-baseline]
+baseline_path = "mypy-baseline.txt"
+depth = 40
+preserve_position = false
+hide_stats = false
+no_colors = false
+ignore = []
+
+
+[tool.ruff]
+# Основные настройки (аналог flakeheaven + black + isort)
+line-length = 120
+target-version = "py312"
+extend-exclude = ["alembic", "**/sandbox.py", ".env", "venv", ]
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W", # Базовые (pycodestyle, pyflakes)
+    "I", # isort
+    "UP", # pyupgrade
+    "PL", # Pylint
+    "PT", # Pytest
+    "RET", # Анализ возвратов
+    "SIM", # Упрощение кода (аналог flake8-simplify)
+    "RUF", # Фиксы Ruff
+    "B", # Bugbear
+    "A", # autoflake (неиспользуемые импорты)
+    "ASYNC", # Асинхронность
+    "N", # PEP8-naming (аналог pep8-naming)
+    "TCH", # Типизация (type checking)
+    "Q", # Кавычки
+    "C4", # flake8-comprehensions
+    "SLF", # self-использование
+    "RSE", # raise-стиль
+    "DTZ", # datetime с таймзоной
+    "TID", # tidy imports
+    "ARG", # Аргументы функций
+    "PIE", # flake8-pie
+    "YTT", # flake8-2020
+    "FA", # flake8-future-annotations
+    "ISC", # flake8-implicit-str-concat
+    "ICN", # flake8-import-conventions
+    "ERA", # flake8-eradicate
+    "PD", # pandas-стиль
+    "PGH", # pygrep-hooks
+    "PLC", # pylint-classes
+    "PLE", # pylint-errors
+    "PLR", # pylint-rules
+    "PLW", # pylint-warnings
+    "TRY", # try-стиль
+]
+ignore = [
+    "PLW1510",
+    'RET504',
+    "UP035", # Import from `collections.abc` instead: `Sequence` or etc
+    'TRY003', # Avoid specifying long messages outside the exception class
+    'RUF001', # Switch-on cyrillic  in strings
+    'RUF002', # Switch-on cyrillic  in strings
+    'RUF003', # Switch-on cyrillic in comments
+    'TRY400', # Use `logging.exception` instead of `logging.error`
+    'B904', # Within an `except` clause, raise exceptions with `raise ... from err` or `raise ... from None`
+    'N815', # Allow mixed case for DTOs
+    'TCH',
+    'DTZ007',
+    'N999',
+    "ICN001",
+]
+
+
+[tool.ruff.lint.mccabe]
+max-complexity = 8
+
+
+# Форматирование (аналог black)
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
+
+# Сортировка импортов (аналог isort)
+[tool.ruff.lint.isort]
+known-first-party = ["tv-program"]
+known-local-folder = ["graphql"]
+lines-after-imports = 2
+required-imports = ["from __future__ import annotations"]
+force-wrap-aliases = false
+split-on-trailing-comma = false
+
+
+[tool.ruff.lint.flake8-quotes]
+avoid-escape = false
+
+[tool.ruff.lint.pylint]
+max-args = 5
+
+# Исключения для файлов (аналог flakeheaven.exceptions)
+[tool.ruff.lint.per-file-ignores]
+unfixable = []
+"**/__init__.py" = ["F401"]       # Неиспользуемые импорты в __init__.py
+"**/tests/*.py" = [
+    "PLR0913",
+    "S101",
+    'DTZ001',
+    'PLR2004',
+    'TC002',
+    'DTZ',
+    'SLF001',
+    'PT011',
+]
+'models.py' = [
+    'ARG002',
+]
+'conftest.py' = ['TC002', 'DTZ']
+"**/views.py" = ["B008"] # Особенности FastApi
+"**/views**/*.py" = ["B008"] # Особенности FastApi
+"**/queries/**/*.py" = ["E712"]  # Особенности SQLAlchemy
+"**/selectors/**/*.py" = ["E712"]  # Особенности SQLAlchemy
+"filters.py" = ["RUF012"]  # Особенности SQLAlchemy
+"factories_dto.py" = ["RUF012"]  # Особенности Polifactory
+"factories_model.py" = ["RUF012"]  # Особенности Polifactory
+"dtos.py" = ["N805"] # Особенности валидаторов pydantic
+"**/dto/**/*.py" = ["N805"] # Особенности валидаторов pydantic
+"**/dtos/**/*.py" = ["N805"] # Особенности валидаторов pydantic
+"**/orm/custom_fields.py" = ["ARG002"]  # Кастомные поля для SqlAlchemy могут требовать неиспользуемых аргументов/
+"**/graphql/**/*.py" = ["I001", "I002"] # isort
+"**/utils/**/*.py" = ["UP046", 'PLW1641']
+"**/managment_commands.py" = ["E712"]

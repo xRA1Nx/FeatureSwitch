@@ -1,0 +1,53 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+.venv/
+*.egg-info/
+dist/
+
+# === Временные файлы ===
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+
+# === Логи и кэши ===
+*.log
+.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.cover
+
+# === IDE и OS ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Git ===
+.git/
+.gitignore
+.gitattributes
+
+# === Документация ===
+README.md
+
+# === Сборка и дистрибуция ===
+build/
+.bundle/
+vendor/
+
+
+# === CI ===
+.gitlab-ci.yml

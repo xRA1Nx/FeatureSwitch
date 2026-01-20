@@ -1,0 +1,69 @@
+---
+default_stages:
+  - pre-commit
+
+exclude: (/alembic/)|(sandbox\.py)
+
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.13
+    hooks:
+      - id: ruff-check
+        types_or: [python, pyi]
+        args: [--fix, --exit-non-zero-on-fix]
+        stages:
+          - pre-commit
+      - id: ruff-format
+        stages:
+          - pre-commit
+
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+        stages:
+          - pre-commit
+      - id: end-of-file-fixer
+        exclude: \.svg$
+        stages:
+          - pre-commit
+      - id: name-tests-test
+        args: [--pytest-test-first]
+        stages:
+          - pre-commit
+
+
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-check-blanket-noqa
+      - id: python-check-mock-methods
+        stages:
+          - pre-commit
+
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+        args:
+          - --format
+          - parsable
+          - --strict
+        stages:
+          - pre-commit
+
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: make types
+        language: system
+        types:
+          - python
+        stages:
+          - pre-commit

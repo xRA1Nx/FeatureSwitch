@@ -1,0 +1,12 @@
+mypy
+mypy-baseline
+mypy-extensions
+polyfactory
+pre-commit
+pydantic-settings
+pytest
+pytest-asyncio
+pytest-env
+pytest-mock
+pytest-timeout
+ruff
