@@ -22,4 +22,5 @@ redis
 ruff
 sqlalchemy
 sqladmin
+tzdata
 uvicorn
