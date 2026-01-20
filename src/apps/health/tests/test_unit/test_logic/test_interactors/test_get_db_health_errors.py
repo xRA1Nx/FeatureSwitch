@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import pytest
-from app.health.dtos import HealthCheckErrorDto
-from app.health.enums import HealthCheckReason
-from app.health.logic.interactors import get_db_health_errors
 from asyncpg import PostgresConnectionError
 from pytest_mock import MockerFixture
 from sqlalchemy.exc import SQLAlchemyError
+
+from src.apps.health.dtos import HealthCheckErrorDto
+from src.apps.health.enums import HealthCheckReason
+from src.apps.health.logic.interactors import get_db_health_errors
 
 
 @pytest.mark.asyncio

@@ -6,7 +6,7 @@ from unittest.mock import Mock
 import pytest
 
 
-MODULE_NAME = "app.health.logic.interactors"
+MODULE_NAME = "src.apps.health.logic.interactors"
 
 if typing.TYPE_CHECKING:
     from unittest.mock import Mock

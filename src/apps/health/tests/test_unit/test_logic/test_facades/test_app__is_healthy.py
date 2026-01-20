@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import pytest
-from app.health.logic.facades import app__is_healthy
+
+from src.apps.health.logic.facades import app__is_healthy
 
 
 @pytest.mark.asyncio

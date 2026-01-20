@@ -8,7 +8,7 @@ import pytest
 if TYPE_CHECKING:
     from unittest.mock import Mock
 
-MODULE_NAME = "app.health.views"
+MODULE_NAME = "src.apps.health.views"
 
 
 @pytest.fixture

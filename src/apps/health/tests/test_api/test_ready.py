@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import pytest
-from app.health.dtos import HealthCheckErrorDto, HealthCheckIsReadyResponseDto
-from app.health.enums import HealthCheckReason
-from app.health.tests.factories_dto import HealthCheckErrorDtoFactory
+
+from src.apps.health.dtos import HealthCheckErrorDto, HealthCheckIsReadyResponseDto
+from src.apps.health.enums import HealthCheckReason
+from src.apps.health.tests.factories_dto import HealthCheckErrorDtoFactory
 
 
 @pytest.mark.asyncio
