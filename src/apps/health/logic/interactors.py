@@ -13,7 +13,7 @@ async def get_db_health_errors() -> list[HealthCheckErrorDto]:
     """Проверка доступности PostgreSQL"""
     try:
         engine = get_async_engine()
-        print(engine)
+        print(engine.url)
         async with engine.connect() as conn:
             result = await conn.execute(text("SELECT 1"))
             result.fetchone()
