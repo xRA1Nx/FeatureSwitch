@@ -24,10 +24,12 @@ class Settings(BaseSettings):
     DB_USER: str = "admin"
     DB_PASSWORD: str = "admin"
     DB_NAME: str = "feature_switch_db"
-    DB_HOST: str = ""
-    DB_PORT: int = 5432
+    DB_HOST: str = "localhost"
+    DB_PORT: int = 5442
     TEST_DB_USER: str = "admin"
     TEST_DB_PASSWORD: str = "admin"
+
+    FLAG_TTL_DAYS: int = 14
 
 
 @functools.lru_cache

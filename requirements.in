@@ -18,6 +18,7 @@ pytest-mock
 pytest-randomly
 python-snappy
 pytest-timeout
+psycopg2-binary
 redis
 ruff
 sqlalchemy

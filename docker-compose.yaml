@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: feature_switch_db
     ports:
-      - "54329:5432"
+      - "5442:5432"
     volumes:
       - feature_switch_postgres_data:/var/lib/postgresql/data
 
