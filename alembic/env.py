@@ -15,7 +15,7 @@ fileConfig(config.config_file_name)
 # add your model's here
 target_metadata = BaseModel.metadata
 from src.apps.feature_flags.models import FeatureFlag
-from src.apps.groups.models import Group
+from src.apps.team.models import TeamService, Team
 
 
 def run_migrations_offline() -> None:

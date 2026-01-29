@@ -5,6 +5,8 @@ from sqladmin import Admin
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 
+from src.apps.admin.feature_flag import TeamAdmin, TeamServiceAdmin
+from src.apps.admin.team import FeatureFlagAdmin
 from src.server.db import get_async_engine
 from src.server.settings import get_settings
 
@@ -30,10 +32,14 @@ class AdminAuth(AuthenticationBackend):
 
 
 def initialise_admin_panel(*, app: FastAPI) -> Admin:
-    return Admin(
+    admin = Admin(
         app=app,
         engine=get_async_engine(),
         authentication_backend=AdminAuth(secret_key="change-in-production"),
         base_url="/admin",
         title="Feature Flags Admin",
     )
+    admin.add_view(FeatureFlagAdmin)
+    admin.add_view(TeamAdmin)
+    admin.add_view(TeamServiceAdmin)
+    return admin
