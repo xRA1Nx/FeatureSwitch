@@ -9,7 +9,7 @@ from src.apps.common.models import BaseModel
 
 
 if typing.TYPE_CHECKING:
-    from src.apps.feature_flags.models import FeatureFlag
+    from src.apps.feature_flag.models import FeatureFlag
 
 
 class Team(BaseModel):
