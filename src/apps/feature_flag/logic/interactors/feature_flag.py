@@ -43,6 +43,5 @@ async def feature_flag__find_by_pk_or_raise(*, pk: int, session: AsyncSession | 
 
 
 def feature_flag__has_changes(*, current_feature_flag: FeatureFlag, update_dto: FeatureFlagUpdateDto) -> bool:
-    return any(
-        [current_feature_flag.is_active != update_dto.is_active, current_feature_flag.ttl_days != update_dto.ttl_days]
-    )
+    update_dict = update_dto.model_dump(exclude_unset=True)  # только измененные поля
+    return any(getattr(current_feature_flag, field_name) != value for field_name, value in update_dict.items())
