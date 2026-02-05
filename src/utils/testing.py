@@ -1,8 +1,13 @@
 from __future__ import annotations
 
 import typing
+from random import randint
 
+from polyfactory import Use
 from polyfactory.factories.pydantic_factory import ModelFactory
+from polyfactory.factories.sqlalchemy_factory import SQLAlchemyFactory
+
+from src.apps.common.models import BaseModel
 
 
 T = typing.TypeVar("T")
@@ -52,6 +57,33 @@ class AsyncSessionMixin:
         return SessionHolder.session
 
 
+class FactoryBuilderMixin(AsyncSessionMixin):
+    @classmethod
+    async def create(cls, **kwargs) -> BaseModel:
+        session = cls.session()
+        if session is None:
+            raise ValueError("Async session is not set. Call set_session() first")
+
+        obj = cls.build(**kwargs)
+        session.add(obj)
+        await session.flush()
+        return obj
+
+
 class BaseDtoFactory(ModelFactory, typing.Generic[T]):
     __is_base_factory__ = True
     __check_model__ = True
+
+
+class BaseSqlAlchemyFactory(SQLAlchemyFactory, typing.Generic[T], FactoryBuilderMixin):
+    __is_base_factory__ = True
+    __check_model__ = True
+    __set_relationships__ = False
+    __set_association_proxy__ = False
+    __set_foreign_keys__ = False
+
+    @staticmethod
+    def get_id_value() -> int:
+        return randint(1, 2_000_000_000)
+
+    id = Use(get_id_value)
