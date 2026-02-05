@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from src.apps.feature_flag.dtos import FeatureFlagUpdateDto
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.apps.feature_flag.dtos import FeatureFlagListItemDto, FeatureFlagListRequestDto, FeatureFlagUpdateDto
 from src.apps.feature_flag.logic.interactors.feature_flag import (
     feature_flag__activated_at_on_changes,
     feature_flag__find_by_pk_or_raise,
@@ -20,3 +22,9 @@ async def feature_flag__prepare_for_admin_update(
         current_feature_flag=current_feature_flag, update_dto=update_dto
     )
     return updated_feature_flag
+
+
+async def feature_flags__list(
+    *, request_dto: FeatureFlagListRequestDto, session: AsyncSession | None = None
+) -> list[FeatureFlagListItemDto]:
+    pass
