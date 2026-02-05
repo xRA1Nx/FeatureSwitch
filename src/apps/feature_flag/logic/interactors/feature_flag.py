@@ -15,9 +15,21 @@ from src.utils.datetime import datetime_now_with_server_tz
 logger = getLogger(__name__)
 
 
+def feature_flag__should_change_activated_at_on_update(
+    *, current_feature_flag: FeatureFlag, update_dto: FeatureFlagUpdateDto
+) -> bool:
+    return not (
+        current_feature_flag.is_active and update_dto.is_active and current_feature_flag.activated_at is not None
+    )
+
+
 def feature_flag__activated_at_on_changes(
     *, current_feature_flag: FeatureFlag, update_dto: FeatureFlagUpdateDto
 ) -> datetime.datetime | None:
+    if not feature_flag__should_change_activated_at_on_update(
+        current_feature_flag=current_feature_flag, update_dto=update_dto
+    ):
+        return current_feature_flag.activated_at
     if update_dto.is_active and current_feature_flag.is_active is False:
         return datetime_now_with_server_tz()
     return None
