@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.apps.common.exceptions import BusinessLogicException
 from src.apps.feature_flag.dtos import FeatureFlagUpdateDto
-from src.apps.feature_flag.logic.feature_flag import feature_flag__find_by_pk
+from src.apps.feature_flag.logic.selectors.feature_flag import feature_flag__find_by_pk
 from src.apps.feature_flag.models import FeatureFlag
 from src.utils.datetime import datetime_now_with_server_tz
 

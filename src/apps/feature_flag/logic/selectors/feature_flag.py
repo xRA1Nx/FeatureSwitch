@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.apps.feature_flag.logic.queries.feature_flag import feature_flag_q__by_pk
