@@ -8,8 +8,8 @@ from functools import wraps
 from logging import getLogger
 from zoneinfo import ZoneInfo
 
-from src.common.constants import HALF_OF_HOUR_IN_MINUTES, HOUR_IN_MINUTES, QUARTER_OF_HOUR_IN_MINUTES
-from src.common.dto import TimeIntervalDto
+from src.apps.common.constants import HALF_OF_HOUR_IN_MINUTES, HOUR_IN_MINUTES, QUARTER_OF_HOUR_IN_MINUTES
+from src.apps.common.dto import TimeIntervalDto
 from src.server.settings import get_settings
 
 
