@@ -5,8 +5,8 @@ import datetime
 import pytest
 
 from src.apps.feature_flag.logic.interactors.feature_flag import feature_flag__activated_at_on_changes
-from src.apps.feature_flag.logic.tests.factories_dto import FeatureFlagUpdateDtoFactory
-from src.apps.feature_flag.logic.tests.factories_model import FeatureFlagFactory
+from src.apps.feature_flag.tests.factories_dto import FeatureFlagUpdateDtoFactory
+from src.apps.feature_flag.tests.factories_model import FeatureFlagFactory
 
 
 def test__feature_flag__activated_at_on_changes__should_not_change(

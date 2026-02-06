@@ -3,8 +3,8 @@ from __future__ import annotations
 import pytest
 
 from src.apps.feature_flag.logic.facades.feature_flag import feature_flag__prepare_for_admin_update
-from src.apps.feature_flag.logic.tests.factories_dto import FeatureFlagUpdateDtoFactory
-from src.apps.feature_flag.logic.tests.factories_model import FeatureFlagFactory
+from src.apps.feature_flag.tests.factories_dto import FeatureFlagUpdateDtoFactory
+from src.apps.feature_flag.tests.factories_model import FeatureFlagFactory
 
 
 @pytest.mark.asyncio

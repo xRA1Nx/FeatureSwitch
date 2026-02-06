@@ -12,7 +12,7 @@ feature_flag_router = APIRouter(prefix="/feature_flags")
 
 
 @feature_flag_router.get("")
-async def get_configurations(
+async def get_feature_flags(
     request_dto: FeatureFlagListRequestDto = Query(...), session: AsyncSession = Depends(get_async_session)
 ) -> list[FeatureFlagListItemDto]:
     return await feature_flags__list(request_dto=request_dto, session=session)

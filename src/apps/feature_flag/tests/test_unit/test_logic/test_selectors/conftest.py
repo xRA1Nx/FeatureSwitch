@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from src.apps.feature_flag.logic.tests.factories_model import FeatureFlagFactory
+from src.apps.feature_flag.tests.factories_model import FeatureFlagFactory
 from src.apps.team.models import TeamService
 from src.apps.team.tests.factories_model import TeamFactory, TeamServiceFactory
 

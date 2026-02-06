@@ -4,7 +4,6 @@ from sqladmin import ModelView
 from starlette.requests import Request
 
 from src.apps.common.custom_types import GenericContext
-from src.apps.feature_flag.models import FeatureFlag
 from src.apps.team.models import Team, TeamService
 
 
