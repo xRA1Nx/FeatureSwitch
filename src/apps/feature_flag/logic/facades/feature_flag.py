@@ -39,13 +39,16 @@ async def feature_flag__filter_list_dto(
     if 'is_active' in request_data.keys():
         filter_data['is_active'] = request_data['is_active']
 
-    if 'team_name' in request_data.keys():
-        service = await team_service__find_by_name_or_raise(name=request_dto.team_name, session=session)
+    if 'service_name' in request_data.keys():
+        service_name= request_dto.service_name.upper().strip()
+        service = await team_service__find_by_name_or_raise(name=service_name, session=session)
         filter_data['service_id'] = service.id
 
-    if 'service_name' in request_data.keys():
-        team = await team__find_by_name_or_raise(name=request_dto.team_name, session=session)
-        filter_data['team_service_ids'] = await team_services__by_team_id(team_id=team.id, session=session)
+    if 'team_name' in request_data.keys():
+        team_name = request_dto.team_name.upper().strip()
+        team = await team__find_by_name_or_raise(name=team_name, session=session)
+        team_services = await team_services__by_team_id(team_id=team.id, session=session)
+        filter_data['team_service_ids'] = [service.id for service in team_services]
 
     return FeatureFlagFilterDto.model_validate(filter_data)
 

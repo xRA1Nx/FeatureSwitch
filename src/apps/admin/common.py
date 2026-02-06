@@ -5,8 +5,8 @@ from sqladmin import Admin
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 
-from src.apps.admin.feature_flag import TeamAdmin, TeamServiceAdmin
-from src.apps.admin.team import FeatureFlagAdmin
+from src.apps.admin.team import TeamAdmin, TeamServiceAdmin
+from src.apps.admin.feature_flag import FeatureFlagAdmin
 from src.server.db import get_async_engine
 from src.server.settings import get_settings
 

@@ -3,7 +3,6 @@ from __future__ import annotations
 import datetime
 
 from src.apps.common.dto import BaseDto
-from src.apps.team.models import Team, TeamService
 
 
 class FeatureFlagUpdateDto(BaseDto):

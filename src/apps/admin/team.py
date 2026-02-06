@@ -1,24 +1,42 @@
 from __future__ import annotations
 
-from fastapi import Request
 from sqladmin import ModelView
+from starlette.requests import Request
 
-from src.apps.feature_flag.dtos import FeatureFlagUpdateDto
-from src.apps.feature_flag.logic.facades.feature_flag import feature_flag__prepare_for_admin_update
+from src.apps.common.custom_types import GenericContext
 from src.apps.feature_flag.models import FeatureFlag
+from src.apps.team.models import Team, TeamService
 
 
-class FeatureFlagAdmin(ModelView, model=FeatureFlag):
+class TeamAdmin(ModelView, model=Team):
     column_details_list = "__all__"
-    column_list = ["name", "team_service", "is_active", "activated_at"]
-    form_create_rules = ["name", "team_service", "ttl_days"]
-    form_edit_rules = ["is_active", "ttl_days"]
+    column_list = ["name"]
+    form_columns = ["name"]
 
     async def on_model_change(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:
-        if is_created:
-            return await super().on_model_change(data=data, model=model, is_created=is_created, request=request)
-        update_dto = FeatureFlagUpdateDto.model_validate(data)
-        model = await feature_flag__prepare_for_admin_update(updated_feature_flag=model, update_dto=update_dto)
-        if not model:
-            return None
+        data = self._get_clean_data(data=data)
         return await super().on_model_change(data=data, model=model, is_created=is_created, request=request)
+
+    @staticmethod
+    def _get_clean_data(data: GenericContext) -> GenericContext:
+        name: str | None = data.get("name")
+        if name:
+            data["name"] = name.upper().strip()
+        return data
+
+
+class TeamServiceAdmin(ModelView, model=TeamService):
+    column_details_list = "__all__"
+    column_list = ["name", "team"]
+    form_columns = ["name", "team"]
+
+    async def on_model_change(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:
+        data = self._get_clean_data(data=data)
+        return await super().on_model_change(data=data, model=model, is_created=is_created, request=request)
+
+    @staticmethod
+    def _get_clean_data(data: dict) -> GenericContext:
+        name: str | None = data.get("name")
+        if name:
+            data["name"] = name.upper().strip()
+        return data
