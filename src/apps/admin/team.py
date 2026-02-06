@@ -15,6 +15,8 @@ class FeatureFlagAdmin(ModelView, model=FeatureFlag):
     form_edit_rules = ["is_active", "ttl_days"]
 
     async def on_model_change(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:
+        if is_created:
+            return await super().on_model_change(data=data, model=model, is_created=is_created, request=request)
         update_dto = FeatureFlagUpdateDto.model_validate(data)
         model = await feature_flag__prepare_for_admin_update(updated_feature_flag=model, update_dto=update_dto)
         if not model:
