@@ -13,7 +13,7 @@ class TeamAdmin(ModelView, model=Team):
     column_list = ["name"]
     form_columns = ["name"]
 
-    async def on_model_change(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:
+    async def on_model_change(self, data: dict, model: Team, is_created: bool, request: Request) -> None:
         data = self._get_clean_data(data=data)
         return await super().on_model_change(data=data, model=model, is_created=is_created, request=request)
 
@@ -30,7 +30,7 @@ class TeamServiceAdmin(ModelView, model=TeamService):
     column_list = ["name", "team"]
     form_columns = ["name", "team"]
 
-    async def on_model_change(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:
+    async def on_model_change(self, data: dict, model: TeamService, is_created: bool, request: Request) -> None:
         data = self._get_clean_data(data=data)
         return await super().on_model_change(data=data, model=model, is_created=is_created, request=request)
 

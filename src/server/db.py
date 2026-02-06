@@ -59,10 +59,15 @@ def get_async_engine() -> AsyncEngine:
     return create_async_engine(url=url, pool_size=20, max_overflow=10, pool_pre_ping=True, pool_recycle=3600)
 
 
-def get_async_session() -> AsyncSession:
+async def get_async_session() -> AsyncSession:
     """Создание объекта асинхронной сессии."""
-    engine = get_async_engine()
-    return AsyncSession(bind=engine, expire_on_commit=False)
+    async with async_session_generator() as session:
+        try:
+            yield session
+        finally:
+            await session.close()
+
+
 
 
 @asynccontextmanager
