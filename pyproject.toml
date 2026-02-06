@@ -177,3 +177,4 @@ unfixable = []
 "**/graphql/**/*.py" = ["I001", "I002"] # isort
 "**/utils/**/*.py" = ["UP046", 'PLW1641']
 "**/managment_commands.py" = ["E712"]
+"**/admin/**/*.py" = ["RUF012"] # Особенности админки

@@ -1,0 +1,47 @@
+from __future__ import annotations
+
+import datetime
+from logging import getLogger
+
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.apps.common.exceptions import BusinessLogicException
+from src.apps.feature_flag.dtos import FeatureFlagUpdateDto
+from src.apps.feature_flag.logic.selectors.feature_flag import feature_flag__find_by_pk
+from src.apps.feature_flag.models import FeatureFlag
+from src.utils.datetime import datetime_now_with_server_tz
+
+
+logger = getLogger(__name__)
+
+
+def feature_flag__should_change_activated_at_on_update(
+    *, current_feature_flag: FeatureFlag, update_dto: FeatureFlagUpdateDto
+) -> bool:
+    return not (
+        current_feature_flag.is_active and update_dto.is_active and current_feature_flag.activated_at is not None
+    )
+
+
+def feature_flag__activated_at_on_changes(
+    *, current_feature_flag: FeatureFlag, update_dto: FeatureFlagUpdateDto
+) -> datetime.datetime | None:
+    if not feature_flag__should_change_activated_at_on_update(
+        current_feature_flag=current_feature_flag, update_dto=update_dto
+    ):
+        return current_feature_flag.activated_at
+    if update_dto.is_active and current_feature_flag.is_active is False:
+        return datetime_now_with_server_tz()
+    return None
+
+
+async def feature_flag__find_by_pk_or_raise(*, pk: int, session: AsyncSession | None = None) -> FeatureFlag:
+    feature_flag = await feature_flag__find_by_pk(session=session, pk=pk)
+    if not feature_flag:
+        raise BusinessLogicException(f"Данная операция не возможна. не существует FeatureFlag с id={pk}")
+    return feature_flag
+
+
+def feature_flag__has_changes(*, current_feature_flag: FeatureFlag, update_dto: FeatureFlagUpdateDto) -> bool:
+    update_dict = update_dto.model_dump(exclude_unset=True)  # только измененные поля
+    return any(getattr(current_feature_flag, field_name) != value for field_name, value in update_dict.items())
