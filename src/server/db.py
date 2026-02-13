@@ -59,7 +59,7 @@ def get_async_engine() -> AsyncEngine:
     return create_async_engine(url=url, pool_size=20, max_overflow=10, pool_pre_ping=True, pool_recycle=3600)
 
 
-async def get_async_session() -> typing.AsyncGenerator[AsyncSession]:
+async def get_async_session() -> typing.AsyncGenerator[AsyncSession, None]:
     """Создание объекта асинхронной сессии."""
     async with async_session_generator() as session:
         try:
