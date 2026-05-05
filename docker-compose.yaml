@@ -12,7 +12,7 @@ services:
     ports:
       - "5442:5432"
     volumes:
-      - feature_switch_postgres_data:/var/lib/postgresql/data
+      - feature_switch_postgres_data:/var/lib/postgresql
 
   redis:
     image: redis:latest
