@@ -25,3 +25,13 @@ def mocked__feature_flag__has_changes(mock_for_module) -> Mock:
 @pytest.fixture
 def mocked__feature_flag__activated_at_on_changes(mock_for_module) -> Mock:
     return mock_for_module(module_name=MODULE_NAME, function_name="feature_flag__activated_at_on_changes")
+
+
+@pytest.fixture
+def mocked__team_service__find_by_name_or_raise(mock_for_module) -> Mock:
+    return mock_for_module(module_name=MODULE_NAME, function_name="team_service__find_by_name_or_raise")
+
+
+@pytest.fixture
+def mocked__team__find_by_name_or_raise(mock_for_module) -> Mock:
+    return mock_for_module(module_name=MODULE_NAME, function_name="team__find_by_name_or_raise")

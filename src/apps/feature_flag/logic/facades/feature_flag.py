@@ -17,7 +17,6 @@ from src.apps.feature_flag.logic.selectors.feature_flag import feature_flags__by
 from src.apps.feature_flag.models import FeatureFlag
 from src.apps.team.logic.interactors.team import team__find_by_name_or_raise
 from src.apps.team.logic.interactors.team_service import team_service__find_by_name_or_raise
-from src.apps.team.logic.selectors.team_service import team_services__by_team_id
 from src.server.db import optional_session_generator
 from src.utils.sql_alchemy import instances_to_dtos
 
@@ -51,8 +50,7 @@ async def feature_flag__filter_dto(
     if "team_name" in request_data:
         team_name = request_dto.team_name.upper().strip()  # type: ignore[union-attr]
         team = await team__find_by_name_or_raise(name=team_name, session=session)
-        team_services = await team_services__by_team_id(team_id=team.id, session=session)
-        filter_data["team_service_ids"] = [service.id for service in team_services]
+        filter_data["team_id"] = team.id
 
     return FeatureFlagFilterDto.model_validate(filter_data)
 
