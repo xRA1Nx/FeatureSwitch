@@ -26,4 +26,4 @@ class FeatureFlagListItemDto(BaseDto):
 class FeatureFlagFilterDto(BaseDto):
     is_active: bool | None = None
     service_id: int | None = None
-    team_service_ids: list[int] | None = None
+    team_id: int | None = None

@@ -1,6 +1,11 @@
 from __future__ import annotations
 
-from src.apps.feature_flag.dtos import FeatureFlagListItemDto, FeatureFlagListRequestDto, FeatureFlagUpdateDto
+from src.apps.feature_flag.dtos import (
+    FeatureFlagFilterDto,
+    FeatureFlagListItemDto,
+    FeatureFlagListRequestDto,
+    FeatureFlagUpdateDto,
+)
 from src.utils.testing import BaseDtoFactory
 
 
@@ -14,3 +19,7 @@ class FeatureFlagListRequestDtoFactory(BaseDtoFactory[FeatureFlagListRequestDto]
 
 class FeatureFlagListItemDtoFactory(BaseDtoFactory[FeatureFlagListItemDto]):
     __model__ = FeatureFlagListItemDto
+
+
+class FeatureFlagFilterDtoFactory(BaseDtoFactory[FeatureFlagFilterDto]):
+    __model__ = FeatureFlagFilterDto

@@ -35,7 +35,7 @@ async def feature_flag__prepare_for_admin_update(
     return updated_feature_flag
 
 
-async def feature_flag__filter_list_dto(
+async def feature_flag__filter_dto(
     *, request_dto: FeatureFlagListRequestDto, session: AsyncSession
 ) -> FeatureFlagFilterDto:
     filter_data = {}
@@ -61,6 +61,6 @@ async def feature_flags__list(
     *, request_dto: FeatureFlagListRequestDto, session: AsyncSession | None = None
 ) -> list[FeatureFlagListItemDto]:
     async with optional_session_generator(session=session) as async_session:
-        filter_dto = await feature_flag__filter_list_dto(session=async_session, request_dto=request_dto)
+        filter_dto = await feature_flag__filter_dto(session=async_session, request_dto=request_dto)
         feature_flags = await feature_flags__by_filter_list_dto(filter_dto=filter_dto, session=async_session)
         return instances_to_dtos(instances=feature_flags, dto_class=FeatureFlagListItemDto)
