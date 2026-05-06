@@ -23,6 +23,5 @@ pip install --upgrade pip pip-tools && make install-dev && make install-hooks
 
 
 ## Upcoming Functionality
-- Improved user experience for flag management in the admin panel — sorting, filtering, and search
 - Add User entity, role-based access control, and corresponding authorization changes
 - Notifications (an interface to notify about expired flags to facilitate their subsequent removal)
