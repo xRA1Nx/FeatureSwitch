@@ -1,13 +1,27 @@
 # Feature Switch
+The service allows wrapping features in "feature flags" and provides the ability
+to activate/deactivate features on the fly (without deployment).
 
-## Установка
+## Installation
 
-1. Уставить Python 3.12
-2. Установить docker
-3. Установить git
-4. Клонировать репозиторий
-5. Создать виртуальное окружение (Python 3.12)
-6. Выполнить
+1. Install Python 3.12
+2. Install Docker
+3. Install Git
+4. Clone the repository
+5. Create a virtual environment (Python 3.12)
+6. Run:
 ```shell script
 pip install --upgrade pip pip-tools && make install-dev && make install-hooks
 ```
+
+## Step-by-Step Guide
+1. Log in to the /admin panel using your credentials (a .env account is temporarily used)
+2. Create your Team via the /admin panel
+3. Create your TeamService and link it to the corresponding Team
+4. Add the necessary FeatureFlags to your project
+5. Activate/deactivate flags as needed. Flags can also be edited or deleted
+
+## Upcoming Functionality
+- Display flags in the admin panel, including ordering, filters, and search
+- Add User entity, role-based access control, and corresponding authorization changes
+- Notifications (an interface to notify about expired flags to facilitate their subsequent removal)
