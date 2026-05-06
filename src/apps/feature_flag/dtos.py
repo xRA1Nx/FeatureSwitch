@@ -16,11 +16,13 @@ class FeatureFlagListRequestDto(BaseDto):
     service_name: str | None = None
 
 
-class FeatureFlagListItemDto(BaseDto):
+class FeatureFlagDto(BaseDto):
+    id: int
     name: str
     is_active: bool
     ttl_days: int
     activated_at: datetime.datetime | None
+    team_service_id: int
 
 
 class FeatureFlagFilterDto(BaseDto):

@@ -55,3 +55,8 @@ def mocked__feature_flags__by_filter_dto(mock_for_module) -> Mock:
 @pytest.fixture
 def mocked__instances_to_dtos(mock_for_module) -> Mock:
     return mock_for_module(module_name=MODULE_NAME, function_name="instances_to_dtos")
+
+
+@pytest.fixture
+def mocked__instance_to_dto(mock_for_module) -> Mock:
+    return mock_for_module(module_name=MODULE_NAME, function_name="instance_to_dto")

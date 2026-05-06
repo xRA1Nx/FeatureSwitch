@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from src.apps.feature_flag.dtos import FeatureFlagListItemDto
+from src.apps.feature_flag.dtos import FeatureFlagDto
 from src.apps.feature_flag.logic.facades.feature_flag import feature_flags__list
 from src.apps.feature_flag.tests.factories_dto import FeatureFlagListRequestDtoFactory
 
@@ -27,5 +27,5 @@ async def test__feature_flags__list(
         filter_dto=mocked__feature_flag__filter_dto.return_value, session=async_session
     )
     mocked__instances_to_dtos.assert_called_once_with(
-        instances=mocked__feature_flags__by_filter_dto.return_value, dto_class=FeatureFlagListItemDto
+        instances=mocked__feature_flags__by_filter_dto.return_value, dto_class=FeatureFlagDto
     )
