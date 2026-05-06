@@ -21,7 +21,8 @@ pip install --upgrade pip pip-tools && make install-dev && make install-hooks
 4. Add the necessary FeatureFlags to your project
 5. Activate/deactivate flags as needed. Flags can also be edited or deleted
 
+
 ## Upcoming Functionality
-- Display flags in the admin panel, including ordering, filters, and search
+- Improved user experience for flag management in the admin panel — sorting, filtering, and search
 - Add User entity, role-based access control, and corresponding authorization changes
 - Notifications (an interface to notify about expired flags to facilitate their subsequent removal)
