@@ -13,7 +13,7 @@ from src.apps.feature_flag.logic.interactors.feature_flag import (
     feature_flag__find_by_pk_or_raise,
     feature_flag__has_changes,
 )
-from src.apps.feature_flag.logic.selectors.feature_flag import feature_flags__by_filter_list_dto
+from src.apps.feature_flag.logic.selectors.feature_flag import feature_flags__by_filter_dto
 from src.apps.feature_flag.models import FeatureFlag
 from src.apps.team.logic.interactors.team import team__find_by_name_or_raise
 from src.apps.team.logic.interactors.team_service import team_service__find_by_name_or_raise
@@ -60,5 +60,5 @@ async def feature_flags__list(
 ) -> list[FeatureFlagListItemDto]:
     async with optional_session_generator(session=session) as async_session:
         filter_dto = await feature_flag__filter_dto(session=async_session, request_dto=request_dto)
-        feature_flags = await feature_flags__by_filter_list_dto(filter_dto=filter_dto, session=async_session)
+        feature_flags = await feature_flags__by_filter_dto(filter_dto=filter_dto, session=async_session)
         return instances_to_dtos(instances=feature_flags, dto_class=FeatureFlagListItemDto)

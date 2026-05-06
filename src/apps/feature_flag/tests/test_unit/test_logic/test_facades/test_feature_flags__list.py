@@ -11,7 +11,7 @@ from src.apps.feature_flag.tests.factories_dto import FeatureFlagListRequestDtoF
 async def test__feature_flags__list(
     mocked__optional_session_generator,
     mocked__feature_flag__filter_dto,
-    mocked__feature_flags__by_filter_list_dto,
+    mocked__feature_flags__by_filter_dto,
     mocked__instances_to_dtos,
     mocked_async_session,
 ):
@@ -23,9 +23,9 @@ async def test__feature_flags__list(
     assert test_result == mocked__instances_to_dtos.return_value
     mocked__optional_session_generator.assert_called_once_with(session=mocked_async_session)
     mocked__feature_flag__filter_dto.assert_called_once_with(session=async_session, request_dto=request_dto)
-    mocked__feature_flags__by_filter_list_dto.assert_called_once_with(
+    mocked__feature_flags__by_filter_dto.assert_called_once_with(
         filter_dto=mocked__feature_flag__filter_dto.return_value, session=async_session
     )
     mocked__instances_to_dtos.assert_called_once_with(
-        instances=mocked__feature_flags__by_filter_list_dto.return_value, dto_class=FeatureFlagListItemDto
+        instances=mocked__feature_flags__by_filter_dto.return_value, dto_class=FeatureFlagListItemDto
     )

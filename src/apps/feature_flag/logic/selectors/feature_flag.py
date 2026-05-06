@@ -23,7 +23,7 @@ async def feature_flag__find_by_pk(*, pk: int, session: AsyncSession | None = No
         return scalars.one_or_none()
 
 
-async def feature_flags__by_filter_list_dto(
+async def feature_flags__by_filter_dto(
     *, session: AsyncSession | None = None, filter_dto: FeatureFlagFilterDto
 ) -> typing.Sequence[FeatureFlag]:
     filter_data = filter_dto.model_dump(exclude_unset=True)

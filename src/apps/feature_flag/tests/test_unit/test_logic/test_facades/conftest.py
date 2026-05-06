@@ -48,8 +48,8 @@ def mocked__feature_flag__filter_dto(mock_for_module) -> Mock:
 
 
 @pytest.fixture
-def mocked__feature_flags__by_filter_list_dto(mock_for_module) -> Mock:
-    return mock_for_module(module_name=MODULE_NAME, function_name="feature_flags__by_filter_list_dto")
+def mocked__feature_flags__by_filter_dto(mock_for_module) -> Mock:
+    return mock_for_module(module_name=MODULE_NAME, function_name="feature_flags__by_filter_dto")
 
 
 @pytest.fixture
