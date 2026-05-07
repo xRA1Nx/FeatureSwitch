@@ -28,7 +28,7 @@ class FeatureFlagAdmin(ModelView, model=FeatureFlag):
     async def on_model_change(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:
         data = self._get_clean_data(data=data)
         if is_created:
-            return await self._on_create_action(data=data, model=model, is_created=is_created, request=request)
+            return await super().on_model_change(data=data, model=model, is_created=is_created, request=request)
         return await self._on_update_action(data=data, model=model, is_created=is_created, request=request)
 
     @staticmethod
@@ -37,9 +37,6 @@ class FeatureFlagAdmin(ModelView, model=FeatureFlag):
         if name:
             data["name"] = name.upper().strip()
         return data
-
-    async def _on_create_action(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:
-        return await super().on_model_change(data=data, model=model, is_created=is_created, request=request)
 
     async def _on_update_action(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:
         update_dto = FeatureFlagUpdateDto.model_validate(data)
