@@ -10,6 +10,7 @@ from src.apps.feature_flag.dtos import (
 )
 from src.apps.feature_flag.logic.interactors.feature_flag import (
     feature_flag__activated_at_on_changes,
+    feature_flag__clean_name,
     feature_flag__find_by_pk_or_raise,
     feature_flag__has_changes,
 )
@@ -37,20 +38,21 @@ async def feature_flag__prepare_for_admin_update(
 async def feature_flag__filter_dto(
     *, request_dto: FeatureFlagListRequestDto, session: AsyncSession
 ) -> FeatureFlagFilterDto:
-    filter_data = {}
     request_data = request_dto.model_dump(exclude_unset=True)
-    if "is_active" in request_data:
-        filter_data["is_active"] = request_data["is_active"]
+    filter_data = request_data
 
-    if "service_name" in request_data:
-        service_name = request_dto.service_name.upper().strip()  # type: ignore[union-attr]
+    if service_name := request_dto.service_name:
+        service_name = service_name.upper().strip()
         service = await team_service__find_by_name_or_raise(name=service_name, session=session)
         filter_data["service_id"] = service.id
 
-    if "team_name" in request_data:
-        team_name = request_dto.team_name.upper().strip()  # type: ignore[union-attr]
+    if team_name := request_dto.team_name:
+        team_name = team_name.upper().strip()
         team = await team__find_by_name_or_raise(name=team_name, session=session)
         filter_data["team_id"] = team.id
+
+    if name := request_dto.name:
+        filter_data["name"] = feature_flag__clean_name(name=name)
 
     return FeatureFlagFilterDto.model_validate(filter_data)
 

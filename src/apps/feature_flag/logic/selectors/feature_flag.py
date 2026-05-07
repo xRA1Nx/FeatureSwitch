@@ -10,6 +10,7 @@ from src.apps.feature_flag.logic.queries.feature_flag import (
     feature_flags__by_team_service_ids,
     feature_flags_q__all,
     feature_flags_q__by_is_active,
+    feature_flags_q__by_names,
     feature_flags_q__by_pk,
 )
 from src.apps.feature_flag.models import FeatureFlag
@@ -34,6 +35,8 @@ async def feature_flags__by_filter_dto(
         query = feature_flags__by_team_service_ids(query=query, service_ids=[typing.cast(int, filter_dto.service_id)])
     if "team_id" in filter_data:
         query = feature_flags__by_team_ids(query=query, team_ids=typing.cast(list[int], [filter_dto.team_id]))
+    if "name" in filter_data:
+        query = feature_flags_q__by_names(query=query, names=typing.cast(list[str], [filter_dto.name]))
 
     async with optional_session_generator(session=session) as async_session:
         scalars = await async_session.scalars(query)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 
-from src.apps.common.dto import BaseDto
+from src.apps.common.dtos import BaseDto
 from src.apps.common.models import BaseModel
 
 

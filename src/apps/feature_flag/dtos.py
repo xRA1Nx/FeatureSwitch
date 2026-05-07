@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 
-from src.apps.common.dto import BaseDto
+from src.apps.common.dtos import BaseDto
 
 
 class FeatureFlagUpdateDto(BaseDto):
@@ -12,6 +12,7 @@ class FeatureFlagUpdateDto(BaseDto):
 
 class FeatureFlagListRequestDto(BaseDto):
     is_active: bool | None = None
+    name: str | None = None
     team_name: str | None = None
     service_name: str | None = None
 
@@ -29,3 +30,4 @@ class FeatureFlagFilterDto(BaseDto):
     is_active: bool | None = None
     service_id: int | None = None
     team_id: int | None = None
+    name: str | None = None

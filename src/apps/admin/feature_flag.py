@@ -8,6 +8,7 @@ from sqladmin import ModelView
 from src.apps.common.custom_types import GenericContext
 from src.apps.feature_flag.dtos import FeatureFlagUpdateDto
 from src.apps.feature_flag.logic.facades.feature_flag import feature_flag__prepare_for_admin_update
+from src.apps.feature_flag.logic.interactors.feature_flag import feature_flag__clean_name
 from src.apps.feature_flag.models import FeatureFlag
 
 
@@ -35,7 +36,7 @@ class FeatureFlagAdmin(ModelView, model=FeatureFlag):
     def _get_clean_data(data: dict) -> GenericContext:
         name: str | None = data.get("name")
         if name:
-            data["name"] = name.upper().strip()
+            data["name"] = feature_flag__clean_name(name=name)
         return data
 
     async def _on_update_action(self, data: dict, model: FeatureFlag, is_created: bool, request: Request) -> None:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pydantic import Field
 
-from src.apps.common.dto import BaseDto
+from src.apps.common.dtos import BaseDto
 from src.apps.health.enums import HealthCheckReason
 
 

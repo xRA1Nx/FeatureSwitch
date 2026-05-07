@@ -6,7 +6,7 @@ from sqlalchemy import inspect, text
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncSession
 
 from src.apps.common.custom_types import BaseDtoType, BaseModelType
-from src.apps.common.dto import KafkaDto
+from src.apps.common.dtos import KafkaDto
 from src.apps.common.models import BaseModel
 from src.server.db import optional_session_generator
 

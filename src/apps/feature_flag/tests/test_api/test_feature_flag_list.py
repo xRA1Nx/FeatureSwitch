@@ -11,7 +11,7 @@ from src.apps.feature_flag.tests.factories_dto import FeatureFlagDtoFactory, Fea
 @pytest.mark.asyncio
 async def test__feature_flags_list__api(api_client, mocked__feature_flags__list):
     request_dto = FeatureFlagListRequestDtoFactory.build(
-        is_active=True, team_name="team_name", service_name="service_name"
+        is_active=True, team_name="team_name", service_name="service_name", name="name"
     )
     expected_dto = FeatureFlagDtoFactory.build()
     mocked__feature_flags__list.return_value = [expected_dto]
