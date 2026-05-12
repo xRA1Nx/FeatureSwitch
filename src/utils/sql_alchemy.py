@@ -4,6 +4,8 @@ import typing
 
 from sqlalchemy import inspect, text
 from sqlalchemy.ext.asyncio import AsyncConnection, AsyncSession
+from sqlalchemy.orm import InstrumentedAttribute
+from sqlalchemy.sql.functions import GenericFunction
 
 from src.apps.common.custom_types import BaseDtoType, BaseModelType
 from src.apps.common.dtos import KafkaDto
@@ -96,3 +98,23 @@ def is_related_instances_loaded(*, instance: BaseModelType, relationship_name: s
     """Проверяет, загружены ли связанные данные"""
     inspector = inspect(instance)
     return relationship_name not in inspector.unloaded
+
+
+class make_interval(GenericFunction):  # noqa: N801
+    """Генерирует SQL-выражение PostgreSQL функции make_interval().
+
+    Пример:
+        FeatureFlag.activated_at + make_interval(days=FeatureFlag.ttl_days)
+    """
+
+    def __init__(  # noqa: PLR0913
+        self,
+        years: int | InstrumentedAttribute[int] = 0,
+        months: int | InstrumentedAttribute[int] = 0,
+        weeks: int | InstrumentedAttribute[int] = 0,
+        days: int | InstrumentedAttribute[int] = 0,
+        hours: int | InstrumentedAttribute[int] = 0,
+        mins: int | InstrumentedAttribute[int] = 0,
+        secs: int | InstrumentedAttribute[int] = 0,
+    ) -> None:
+        super().__init__(years, months, weeks, days, hours, mins, secs)

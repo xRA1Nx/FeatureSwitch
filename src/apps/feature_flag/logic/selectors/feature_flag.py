@@ -12,9 +12,12 @@ from src.apps.feature_flag.logic.queries.feature_flag import (
     feature_flags_q__by_is_active,
     feature_flags_q__by_names,
     feature_flags_q__by_pk,
+    feature_flags_q__is_actual,
+    feature_flags_q__is_expired,
 )
 from src.apps.feature_flag.models import FeatureFlag
 from src.server.db import optional_session_generator
+from src.utils.datetime import datetime_now_with_server_tz
 
 
 async def feature_flag__find_by_pk(*, pk: int, session: AsyncSession | None = None) -> FeatureFlag | None:
@@ -31,6 +34,13 @@ async def feature_flags__by_filter_dto(
     query = feature_flags_q__all()
     if "is_active" in filter_data:
         query = feature_flags_q__by_is_active(query=query, is_active=filter_data["is_active"])
+    if "is_expired" in filter_data:
+        now = datetime_now_with_server_tz()
+        if filter_data["is_expired"]:
+            query = feature_flags_q__is_expired(now=now, query=query)
+        else:
+            query = feature_flags_q__is_actual(now=now, query=query)
+
     if "service_id" in filter_data:
         query = feature_flags__by_team_service_ids(query=query, service_ids=[typing.cast(int, filter_dto.service_id)])
     if "team_id" in filter_data:
