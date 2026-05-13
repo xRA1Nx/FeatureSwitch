@@ -20,7 +20,7 @@ pip install --upgrade pip pip-tools && make install-dev && make install-hooks
 3. Create your TeamService and link it to the corresponding Team
 4. Add the necessary FeatureFlags to your project
 5. Activate/deactivate flags as needed. Flags can also be edited or deleted
-6. Use Swagger /docs for endpoints showing flag activity status and TTL relevance.
+6. Refer to Swagger /docs for the endpoints that report flag activity status and TTL relevance.
 
 
 ## Upcoming Functionality
