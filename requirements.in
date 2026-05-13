@@ -1,5 +1,6 @@
 alembic
 asyncpg
+coverage
 greenlet
 itsdangerous
 httpx

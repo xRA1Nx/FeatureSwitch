@@ -21,9 +21,7 @@ async def test__feature_flags__by_filter_dto(mocked__optional_session_generator,
     expected_feature_flag = await FeatureFlagFactory.create(team_service_id=expected_service.id, is_active=is_active)
     await FeatureFlagFactory.create(team_service_id=not_expected_team_service.id, is_active=is_active)
     await FeatureFlagFactory.create(team_service_id=expected_service.id, is_active=not is_active)
-    filter_dto = FeatureFlagFilterDto(
-        is_active=is_active, service_id=expected_service.id, team_id=expected_team.id, is_expired=None
-    )
+    filter_dto = FeatureFlagFilterDto(is_active=is_active, service_id=expected_service.id, team_id=expected_team.id)
 
     test_result = await feature_flags__by_filter_dto(filter_dto=filter_dto)
 

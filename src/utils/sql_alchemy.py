@@ -107,6 +107,8 @@ class make_interval(GenericFunction):  # noqa: N801
         FeatureFlag.activated_at + make_interval(days=FeatureFlag.ttl_days)
     """
 
+    inherit_cache = True  # Enables caching of SQL queries (the function is deterministic)
+
     def __init__(  # noqa: PLR0913
         self,
         years: int | InstrumentedAttribute[int] = 0,
