@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import datetime
+import typing
 
 from sqlalchemy import DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.apps.common.models import BaseModel
-from src.apps.team.models import TeamService
 from src.server.settings import get_settings
 
+
+if typing.TYPE_CHECKING:
+    from src.apps.team.models import TeamService
 
 settings = get_settings()
 

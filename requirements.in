@@ -1,4 +1,5 @@
 alembic
+bcrypt==4.0.1
 asyncpg
 coverage
 greenlet
@@ -8,6 +9,7 @@ fastapi
 mypy
 mypy-baseline
 mypy-extensions
+passlib
 polyfactory
 pre-commit
 prometheus_fastapi_instrumentator
@@ -24,5 +26,6 @@ redis
 ruff
 sqlalchemy
 sqladmin
+typer
 tzdata
 uvicorn

@@ -15,7 +15,17 @@ pip install --upgrade pip pip-tools && make install-dev && make install-hooks
 ```
 
 ## Step-by-Step Guide
-1. Log in to the /admin panel using your credentials (a .env account is temporarily used)
+1. **Create an admin user** (interactive mode):
+```shell script
+python manage.py user create-admin
+```
+You will be prompted to enter:
+-Email address
+-Password (twice for confirmation)
+Alternatively, you can create a user non-interactively:
+```shell script
+python manage.py user create-admin --email admin@example.com --password your_password
+```
 2. Create your Team via the /admin panel
 3. Create your TeamService and link it to the corresponding Team
 4. Add the necessary FeatureFlags to your project

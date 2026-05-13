@@ -44,6 +44,7 @@ repos:
     rev: v1.10.0
     hooks:
       - id: python-check-blanket-noqa
+        exclude: (/alembic/)|(sandbox\.py)|(manage\.py)
       - id: python-check-mock-methods
         stages:
           - pre-commit
