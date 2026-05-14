@@ -2,30 +2,51 @@ from __future__ import annotations
 
 from sqladmin import ModelView
 from starlette.requests import Request
+from wtforms.validators import DataRequired
 
 from src.apps.common.custom_types import GenericContext
+from src.apps.user.logic.selectors.user import user__find_by_pk
 from src.apps.user.models import User
 from src.utils.password import get_hashed_password
 from src.utils.strings import ensure_valid_email
 
 
+async def is_user_active_admin(*, user_id: int | None) -> bool:
+    if not user_id:
+        return False
+    user = await user__find_by_pk(pk=user_id)
+    if not user:
+        return False
+    return user.is_admin and user.is_active
+
+
 class UserAdmin(ModelView, model=User):
-    column_details_list = "__all__"
+    column_details_exclude_list = ["hashed_password"]
+
     column_default_sort = [("id", True)]
     column_searchable_list = ["email"]
     column_sortable_list = ["id", "email", "is_admin", "is_active", "created_at"]
     column_list = ["id", "email", "is_admin", "is_active"]
 
-    form_create_rules = ["email", "password", "is_active"]
-    form_edit_rules = ["email", "is_active"]
+    column_labels = {"hashed_password": "Password"}
 
-    form_excluded_columns = ["hashed_password"]
+    form_create_rules = ["email", "hashed_password", "team"]
+    form_edit_rules = ["email", "team", "is_active"]
+
+    form_args = {"team": {"validators": [DataRequired()]}}
+
+    async def is_accessible(self, request: Request) -> bool:  # type: ignore[override]
+        return await is_user_active_admin(user_id=request.session.get("user_id"))
 
     async def on_model_change(self, data: GenericContext, model: User, is_created: bool, request: Request) -> None:
-        if is_created and "password" in data:
-            raw_password = data.pop("password")
+        if is_created:
+            raw_password = data.pop("hashed_password", None)
+            if not raw_password:
+                raise ValueError("Password is required for new users")
+
             data["hashed_password"] = get_hashed_password(raw_password=raw_password)
             data["is_admin"] = False
+            data["is_active"] = True
 
         if "email" in data:
             email = data["email"].strip().lower()
