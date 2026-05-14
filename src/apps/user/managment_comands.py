@@ -5,6 +5,7 @@ import asyncio
 import typer
 
 from src.apps.user.logic.facades.user import admin_user__create
+from src.utils.strings import ensure_valid_email
 
 
 user_management_app = typer.Typer(help="User management commands")
@@ -16,9 +17,14 @@ def create_admin(
     password: str = typer.Option(None, "--password", "-p", hide_input=True),
 ) -> None:
     """Create a new admin user"""
-    # Если хоть один параметр не передан - интерактивный режим
-    if email is None or password is None:
+    if email is None:
         email = typer.prompt("Email")
+    is_valid_email = ensure_valid_email(email=email, should_raise_exception=False)
+    if not is_valid_email:
+        typer.secho("❌ Email is not valid!", fg=typer.colors.RED)
+        raise typer.Exit(code=1)
+
+    if password is None:
         password = typer.prompt("Password", hide_input=True)
         confirm = typer.prompt("Confirm password", hide_input=True)
         if password != confirm:
