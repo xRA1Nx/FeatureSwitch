@@ -34,5 +34,4 @@ python manage.py user create-admin --email admin@example.com --password your_pas
 
 
 ## Upcoming Functionality
-- Add User entity, role-based access control, and corresponding authorization changes
 - Notifications (an interface to notify about expired flags to facilitate their subsequent removal)
