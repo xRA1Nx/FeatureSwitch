@@ -24,7 +24,7 @@ class UserAdmin(ModelView, model=User):
     async def on_model_change(self, data: GenericContext, model: User, is_created: bool, request: Request) -> None:
         if is_created and "password" in data:
             raw_password = data.pop("password")
-            data["hashed_password"] = get_hashed_password(raw_password)
+            data["hashed_password"] = get_hashed_password(raw_password=raw_password)
             data["is_admin"] = False
 
         if "email" in data:
