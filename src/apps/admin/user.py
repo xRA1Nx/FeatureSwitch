@@ -5,19 +5,9 @@ from starlette.requests import Request
 from wtforms.validators import DataRequired
 
 from src.apps.common.custom_types import GenericContext
-from src.apps.user.logic.selectors.user import user__find_by_pk
 from src.apps.user.models import User
 from src.utils.password import get_hashed_password
 from src.utils.strings import ensure_valid_email
-
-
-async def is_user_active_admin(*, user_id: int | None) -> bool:
-    if not user_id:
-        return False
-    user = await user__find_by_pk(pk=user_id)
-    if not user:
-        return False
-    return user.is_admin and user.is_active
 
 
 class UserAdmin(ModelView, model=User):
@@ -35,8 +25,8 @@ class UserAdmin(ModelView, model=User):
 
     form_args = {"team": {"validators": [DataRequired()]}}
 
-    async def is_accessible(self, request: Request) -> bool:  # type: ignore[override]
-        return await is_user_active_admin(user_id=request.session.get("user_id"))
+    def is_accessible(self, request: Request) -> bool:
+        return request.session.get("is_admin", False) and request.session.get("is_active", False)
 
     async def on_model_change(self, data: GenericContext, model: User, is_created: bool, request: Request) -> None:
         if is_created:

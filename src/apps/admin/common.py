@@ -32,7 +32,15 @@ class AdminAuth(AuthenticationBackend):
         if not verify_password(raw_password=password, hashed=user.hashed_password):
             return False
 
-        request.session.update({"authenticated": True, "user_id": user.id, "email": user.email})
+        request.session.update(
+            {
+                "authenticated": True,
+                "user_id": user.id,
+                "email": user.email,
+                "is_admin": user.is_admin,
+                "is_active": user.is_active,
+            }
+        )
         return True
 
     async def authenticate(self, request: Request) -> bool:
